@@ -1,0 +1,202 @@
+[
+  {
+    "op": "core/column-split",
+    "description": "Split column Column 1 by separator",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "Column 1",
+    "guessCellType": true,
+    "removeOriginalColumn": true,
+    "mode": "separator",
+    "separator": " - - [",
+    "regex": false,
+    "maxColumns": 2
+  },
+  {
+    "op": "core/column-rename",
+    "description": "Rename column Column 1 1 to IP",
+    "oldColumnName": "Column 1 1",
+    "newColumnName": "IP"
+  },
+  {
+    "op": "core/column-split",
+    "description": "Split column Column 1 2 by separator",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "Column 1 2",
+    "guessCellType": true,
+    "removeOriginalColumn": true,
+    "mode": "separator",
+    "separator": "] \"",
+    "regex": false,
+    "maxColumns": 2
+  },
+  {
+    "op": "core/column-rename",
+    "description": "Rename column Column 1 2 1 to Request Start Time",
+    "oldColumnName": "Column 1 2 1",
+    "newColumnName": "Request Start Time"
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column Request Start Time using expression grel:value.toDate(\"dd/MMM/yyyy:hh:mm:ss Z\")",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "Request Start Time",
+    "expression": "grel:value.toDate(\"dd/MMM/yyyy:hh:mm:ss Z\")",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/column-split",
+    "description": "Split column Column 1 2 2 by separator",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "Column 1 2 2",
+    "guessCellType": true,
+    "removeOriginalColumn": true,
+    "mode": "separator",
+    "separator": " ",
+    "regex": false,
+    "maxColumns": 2
+  },
+  {
+    "op": "core/column-rename",
+    "description": "Rename column Column 1 2 2 1 to Request Type",
+    "oldColumnName": "Column 1 2 2 1",
+    "newColumnName": "Request Type"
+  },
+  {
+    "op": "core/column-split",
+    "description": "Split column Column 1 2 2 2 by separator",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "Column 1 2 2 2",
+    "guessCellType": true,
+    "removeOriginalColumn": true,
+    "mode": "separator",
+    "separator": "\" ",
+    "regex": false,
+    "maxColumns": 2
+  },
+  {
+    "op": "core/column-rename",
+    "description": "Rename column Column 1 2 2 2 1 to URL",
+    "oldColumnName": "Column 1 2 2 2 1",
+    "newColumnName": "URL"
+  },
+  {
+    "op": "core/column-split",
+    "description": "Split column Column 1 2 2 2 2 by separator",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "Column 1 2 2 2 2",
+    "guessCellType": true,
+    "removeOriginalColumn": true,
+    "mode": "separator",
+    "separator": " ",
+    "regex": false,
+    "maxColumns": 2
+  },
+  {
+    "op": "core/column-rename",
+    "description": "Rename column Column 1 2 2 2 2 1 to Response Code",
+    "oldColumnName": "Column 1 2 2 2 2 1",
+    "newColumnName": "Response Code"
+  },
+  {
+    "op": "core/column-split",
+    "description": "Split column Column 1 2 2 2 2 2 by separator",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "Column 1 2 2 2 2 2",
+    "guessCellType": true,
+    "removeOriginalColumn": true,
+    "mode": "separator",
+    "separator": " \"",
+    "regex": false,
+    "maxColumns": 2
+  },
+  {
+    "op": "core/column-rename",
+    "description": "Rename column Column 1 2 2 2 2 2 1 to Response Size",
+    "oldColumnName": "Column 1 2 2 2 2 2 1",
+    "newColumnName": "Response Size"
+  },
+  {
+    "op": "core/column-split",
+    "description": "Split column Column 1 2 2 2 2 2 2 by separator",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "Column 1 2 2 2 2 2 2",
+    "guessCellType": true,
+    "removeOriginalColumn": true,
+    "mode": "separator",
+    "separator": "\" \"",
+    "regex": false,
+    "maxColumns": 2
+  },
+  {
+    "op": "core/column-rename",
+    "description": "Rename column Column 1 2 2 2 2 2 2 1 to Referer",
+    "oldColumnName": "Column 1 2 2 2 2 2 2 1",
+    "newColumnName": "Referer"
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column Referer using expression clojure:(when-not (= value \"-\") value)",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "Referer",
+    "expression": "clojure:(when-not (= value \"-\") value)",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/column-split",
+    "description": "Split column Column 1 2 2 2 2 2 2 2 by separator",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "Column 1 2 2 2 2 2 2 2",
+    "guessCellType": true,
+    "removeOriginalColumn": true,
+    "mode": "separator",
+    "separator": "\" ",
+    "regex": false,
+    "maxColumns": 2
+  },
+  {
+    "op": "core/column-rename",
+    "description": "Rename column Column 1 2 2 2 2 2 2 2 1 to User Agent",
+    "oldColumnName": "Column 1 2 2 2 2 2 2 2 1",
+    "newColumnName": "User Agent"
+  },
+  {
+    "op": "core/column-rename",
+    "description": "Rename column Column 1 2 2 2 2 2 2 2 2 to Response Time (microseconds)",
+    "oldColumnName": "Column 1 2 2 2 2 2 2 2 2",
+    "newColumnName": "Response Time (microseconds)"
+  }
+]
