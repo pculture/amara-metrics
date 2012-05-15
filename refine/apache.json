@@ -242,5 +242,37 @@
     "baseColumnName": "Response Time (microseconds)",
     "expression": "clojure:(float (/ value 1000))",
     "onError": "set-to-blank"
+  },
+  {
+    "op": "core/column-addition",
+    "description": "Create column URL 2 at index 4 based on column Clean URL using expression clojure:(apply str (take 2 (re-seq #\"/[^/]+\" value)))",
+    "engineConfig": {
+      "facets": [
+        {
+          "to": 1337034900000,
+          "expression": "value",
+          "selectError": true,
+          "selectTime": true,
+          "selectBlank": true,
+          "name": "Request Start Time",
+          "selectNonTime": true,
+          "columnName": "Request Start Time",
+          "from": 1337034780000,
+          "type": "timerange"
+        }
+      ],
+      "mode": "row-based"
+    },
+    "newColumnName": "URL 2",
+    "columnInsertIndex": 4,
+    "baseColumnName": "Clean URL",
+    "expression": "clojure:(apply str (take 2 (re-seq #\"/[^/]+\" value)))",
+    "onError": "keep-original"
+  },
+  {
+    "op": "core/column-move",
+    "description": "Move column URL 2 to position 5",
+    "columnName": "URL 2",
+    "index": 5
   }
 ]
