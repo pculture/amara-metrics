@@ -247,20 +247,7 @@
     "op": "core/column-addition",
     "description": "Create column URL 2 at index 4 based on column Clean URL using expression clojure:(apply str (take 2 (re-seq #\"/[^/]+\" value)))",
     "engineConfig": {
-      "facets": [
-        {
-          "to": 1337034900000,
-          "expression": "value",
-          "selectError": true,
-          "selectTime": true,
-          "selectBlank": true,
-          "name": "Request Start Time",
-          "selectNonTime": true,
-          "columnName": "Request Start Time",
-          "from": 1337034780000,
-          "type": "timerange"
-        }
-      ],
+      "facets": [],
       "mode": "row-based"
     },
     "newColumnName": "URL 2",
