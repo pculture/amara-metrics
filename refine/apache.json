@@ -198,5 +198,68 @@
     "description": "Rename column Column 1 2 2 2 2 2 2 2 2 to Response Time (microseconds)",
     "oldColumnName": "Column 1 2 2 2 2 2 2 2 2",
     "newColumnName": "Response Time (microseconds)"
+  },
+  {
+    "op": "core/column-addition",
+    "description": "Create column Clean URL at index 4 based on column URL using expression clojure:(second (re-matches #\"(.*)HTTP/1..$\" value))",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "newColumnName": "Clean URL",
+    "columnInsertIndex": 4,
+    "baseColumnName": "URL",
+    "expression": "clojure:(second (re-matches #\"(.*)HTTP/1..$\" value))",
+    "onError": "keep-original"
+  },
+  {
+    "op": "core/column-addition",
+    "description": "Create column URL 1 at index 5 based on column Clean URL using expression clojure:(apply str (take 1 (re-seq #\"/[^/]*\" value)))",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "newColumnName": "URL 1",
+    "columnInsertIndex": 5,
+    "baseColumnName": "Clean URL",
+    "expression": "clojure:(apply str (take 1 (re-seq #\"/[^/]*\" value)))",
+    "onError": "keep-original"
+  },
+  {
+    "op": "core/column-removal",
+    "description": "Remove column URL",
+    "columnName": "URL"
+  },
+  {
+    "op": "core/column-addition",
+    "description": "Create column Response Time (ms) at index 10 based on column Response Time (microseconds) using expression clojure:(float (/ value 1000))",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "newColumnName": "Response Time (ms)",
+    "columnInsertIndex": 10,
+    "baseColumnName": "Response Time (microseconds)",
+    "expression": "clojure:(float (/ value 1000))",
+    "onError": "set-to-blank"
+  },
+  {
+    "op": "core/column-addition",
+    "description": "Create column URL 2 at index 4 based on column Clean URL using expression clojure:(apply str (take 2 (re-seq #\"/[^/]+\" value)))",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "newColumnName": "URL 2",
+    "columnInsertIndex": 4,
+    "baseColumnName": "Clean URL",
+    "expression": "clojure:(apply str (take 2 (re-seq #\"/[^/]+\" value)))",
+    "onError": "keep-original"
+  },
+  {
+    "op": "core/column-move",
+    "description": "Move column URL 2 to position 5",
+    "columnName": "URL 2",
+    "index": 5
   }
 ]
