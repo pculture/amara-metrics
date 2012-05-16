@@ -9,6 +9,9 @@ class vagrant {
   user { "vagrant": ensure => "present"; } ->
 
   class { "base": }
+
+  include graphite
+  graphite::apache{ "graphite.example.com": }
 }
 
 class { "vagrant": }

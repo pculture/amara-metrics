@@ -3,6 +3,16 @@
 
 (def graph (graphite {:host "localhost"}))
 
+(defn add-environ-name
+  "Add the environment name to the hostname, based on the presence of a tag."
+  [{:keys [tags host] :as event}]
+  (let [tags (set tags)]
+    (cond
+      (tags "production") (update-in event [:host] str ".production")
+      (tags "staging")    (update-in event [:host] str ".staging")
+      (tags "dev")        (update-in event [:host] str ".dev")
+      :else               event)))
+
 (let [
       ; Streams that take events, transform them into a specific type of metric,
       ; and send them along to graphite.
@@ -11,7 +21,7 @@
                              (with {:metric 1.0}
                                    graph))
 
-      meterify #(adjust [:service str " per-second"]
+      meterify #(adjust [:service str " rate-per-second"]
                         (default {:metric 1.0}
                                  (fill-in-last 5 {:metric 0.0}
                                                (rate 5
@@ -20,7 +30,6 @@
 
       histogramify #(adjust [:service str " value"]
                             (percentiles 5 [0.5 0.75 0.95 0.99 1.0]
-                                         prn
                                          graph))
 
 
@@ -50,13 +59,12 @@
                         (meters)
                         (histograms)
                         (timers))
-
       ]
   (streams
-    (partial prn "RAW")
-    (by [:host :service]
-        (metrics))
+    (adjust add-environ-name
+            (by [:host :service]
+                (metrics))
 
-    (by [:service]
-        (with {:host "all-hosts"}
-              (metrics)))))
+            (by [:service]
+                (with {:host "all-hosts"}
+                      (metrics))))))

@@ -9,6 +9,9 @@ class ec2 {
   #user { "vagrant": ensure => "present"; } ->
 
   class { "base": }
+
+  include graphite
+  graphite::apache{ "graphite.universalsubtitles.org": }
 }
 
 class { "ec2": }
