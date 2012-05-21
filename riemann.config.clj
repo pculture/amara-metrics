@@ -13,6 +13,16 @@
       (tags "dev")        (update-in event [:host] str ".dev")
       :else               event)))
 
+(defn add-environ-name-combined
+  [{:keys [tags host] :as event}]
+  (let [tags (set tags)]
+    (assoc event :host (cond
+                         (tags "production") "all-hosts.production"
+                         (tags "staging")    "all-hosts.staging"
+                         (tags "dev")        "all-hosts.dev"
+                         :else               "all-hosts"))))
+
+
 (let [
       ; Streams that take events, transform them into a specific type of metric,
       ; and send them along to graphite.
@@ -52,6 +62,11 @@
                      (histogramify)
                      (rateify))
 
+      ; Gauges are special -- they're super simple.
+
+      gauges #(where (tagged "gauge")
+                     (graph))
+
       ; Shortcut to send a stream along to all metrics.
 
       metrics #(default {}
@@ -63,8 +78,8 @@
   (streams
     (adjust add-environ-name
             (by [:host :service]
-                (metrics))
+                (metrics)))
 
-            (by [:service]
-                (with {:host "all-hosts"}
-                      (metrics))))))
+    (adjust add-environ-name-combined
+            (by [:host :service]
+                (metrics)))))
