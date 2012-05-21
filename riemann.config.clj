@@ -65,7 +65,7 @@
       ; Gauges are special -- they're super simple.
 
       gauges #(where (tagged "gauge")
-                     (graph))
+                     graph)
 
       ; Shortcut to send a stream along to all metrics.
 
@@ -76,6 +76,10 @@
                         (timers))
       ]
   (streams
+    (with {:host "riemann" :service "raw-events-processed" :metric 1.0}
+          (fill-in-last 5 {:metric 0.0}
+                        (rate 5 graph)))
+
     (adjust add-environ-name
             (by [:host :service]
                 (metrics)))
