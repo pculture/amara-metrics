@@ -73,7 +73,8 @@
                         (occurrences)
                         (meters)
                         (histograms)
-                        (timers))
+                        (timers)
+                        (gauges))
       ]
   (streams
     (with {:host "riemann" :service "raw-events-processed" :metric 1.0}
