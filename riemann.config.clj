@@ -43,9 +43,6 @@
                                          graph))
 
 
-      rateify #(with {:metric 1.0}
-                     (meterify))
-
       ; Streams that take events, look at their tags, and send them along to the
       ; appropriate metricizing stream(s).
 
@@ -59,8 +56,7 @@
                          (histogramify))
 
       timers #(where (tagged "timer")
-                     (histogramify)
-                     (rateify))
+                     (histogramify))
 
       ; Gauges are special -- they're super simple.
 
