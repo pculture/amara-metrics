@@ -1,0 +1,197 @@
+[
+  {
+    "op": "core/column-removal",
+    "description": "Remove column Column 1",
+    "columnName": "Column 1"
+  },
+  {
+    "op": "core/column-rename",
+    "description": "Rename column Column 2 to Event Time",
+    "oldColumnName": "Column 2",
+    "newColumnName": "Event Time"
+  },
+  {
+    "op": "core/column-rename",
+    "description": "Rename column Column 3 to User Host",
+    "oldColumnName": "Column 3",
+    "newColumnName": "User Host"
+  },
+  {
+    "op": "core/column-rename",
+    "description": "Rename column Column 4 to Thread ID",
+    "oldColumnName": "Column 4",
+    "newColumnName": "Thread ID"
+  },
+  {
+    "op": "core/column-rename",
+    "description": "Rename column Column 5 to Server ID",
+    "oldColumnName": "Column 5",
+    "newColumnName": "Server ID"
+  },
+  {
+    "op": "core/column-rename",
+    "description": "Rename column Column 6 to Command Type",
+    "oldColumnName": "Column 6",
+    "newColumnName": "Command Type"
+  },
+  {
+    "op": "core/column-rename",
+    "description": "Rename column Column 7 to Argument",
+    "oldColumnName": "Column 7",
+    "newColumnName": "Argument"
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column Event Time using expression jython:return value.split(': ', 2)[-1].strip()",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "Event Time",
+    "expression": "jython:return value.split(': ', 2)[-1].strip()",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column User Host using expression jython:return value.split(': ', 2)[-1].strip()",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "User Host",
+    "expression": "jython:return value.split(': ', 2)[-1].strip()",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column Thread ID using expression jython:return value.split(': ', 2)[-1].strip()",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "Thread ID",
+    "expression": "jython:return value.split(': ', 2)[-1].strip()",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column Server ID using expression jython:return value.split(': ', 2)[-1].strip()",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "Server ID",
+    "expression": "jython:return value.split(': ', 2)[-1].strip()",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column Command Type using expression jython:return value.split(': ', 2)[-1].strip()",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "Command Type",
+    "expression": "jython:return value.split(': ', 2)[-1].strip()",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column Argument using expression jython:return value.split(': ', 2)[-1].strip()",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "Argument",
+    "expression": "jython:return value.split(': ', 2)[-1].strip()",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column Event Time using expression grel:value.toDate(\"yyyy-MM-dd hh:mm:ss\")",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "Event Time",
+    "expression": "grel:value.toDate(\"yyyy-MM-dd hh:mm:ss\")",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/column-addition",
+    "description": "Create column User IP at index 2 based on column User Host using expression clojure:(second (last (re-seq #\"\\[([\\d.]+)\\]\" value)))",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "newColumnName": "User IP",
+    "columnInsertIndex": 2,
+    "baseColumnName": "User Host",
+    "expression": "clojure:(second (last (re-seq #\"\\[([\\d.]+)\\]\" value)))",
+    "onError": "set-to-blank"
+  },
+  {
+    "op": "core/column-addition",
+    "description": "Create column User Hostname at index 2 based on column User Host using expression clojure:(second (last (re-seq #\"@ ([^\\[]+) \\[\" value)))",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "newColumnName": "User Hostname",
+    "columnInsertIndex": 2,
+    "baseColumnName": "User Host",
+    "expression": "clojure:(second (last (re-seq #\"@ ([^\\[]+) \\[\" value)))",
+    "onError": "set-to-blank"
+  },
+  {
+    "op": "core/column-addition",
+    "description": "Create column User at index 2 based on column User Host using expression clojure:(second (last (re-seq #\"^(.+) @\" value)))",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "newColumnName": "User",
+    "columnInsertIndex": 2,
+    "baseColumnName": "User Host",
+    "expression": "clojure:(second (last (re-seq #\"^(.+) @\" value)))",
+    "onError": "set-to-blank"
+  },
+  {
+    "op": "core/column-removal",
+    "description": "Remove column User Host",
+    "columnName": "User Host"
+  },
+  {
+    "op": "core/column-addition",
+    "description": "Create column Operation at index 8 based on column Argument using expression jython:return value.split()[0].upper()",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "newColumnName": "Operation",
+    "columnInsertIndex": 8,
+    "baseColumnName": "Argument",
+    "expression": "jython:return value.split()[0].upper()",
+    "onError": "set-to-blank"
+  },
+  {
+    "op": "core/column-move",
+    "description": "Move column Operation to position 7",
+    "columnName": "Operation",
+    "index": 7
+  }
+]
