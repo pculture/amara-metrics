@@ -193,5 +193,71 @@
     "description": "Move column Operation to position 7",
     "columnName": "Operation",
     "index": 7
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column Operation using expression jython:return ''",
+    "engineConfig": {
+      "facets": [
+        {
+          "invert": false,
+          "expression": "value",
+          "selectError": false,
+          "omitError": false,
+          "selectBlank": false,
+          "name": "Command Type",
+          "omitBlank": false,
+          "columnName": "Command Type",
+          "type": "list",
+          "selection": [
+            {
+              "v": {
+                "v": "Connect",
+                "l": "Connect"
+              }
+            }
+          ]
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "Operation",
+    "expression": "jython:return ''",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column Argument using expression jython:return ''",
+    "engineConfig": {
+      "facets": [
+        {
+          "invert": false,
+          "expression": "value",
+          "selectError": false,
+          "omitError": false,
+          "selectBlank": false,
+          "name": "Command Type",
+          "omitBlank": false,
+          "columnName": "Command Type",
+          "type": "list",
+          "selection": [
+            {
+              "v": {
+                "v": "Connect",
+                "l": "Connect"
+              }
+            }
+          ]
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "Argument",
+    "expression": "jython:return ''",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
   }
 ]
