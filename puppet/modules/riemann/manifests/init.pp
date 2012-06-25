@@ -14,6 +14,12 @@ class riemann {
         refreshonly => true,
         subscribe => File["riemann-deb"],
     } ->
+    # manual symlink to /lib/init/upstart-job for http://projects.puppetlabs.com/issues/14297
+    file { '/etc/init.d/riemann':
+        ensure  => link,
+        target  => '/lib/init/upstart-job',
+        alias   => "riemann-upstart-job"
+    } ->
     file { "/etc/init/riemann.conf":
         mode => 0644,
         owner => root,
@@ -24,7 +30,10 @@ class riemann {
     service { "riemann":
         ensure => running,
         provider => upstart,
+        hasrestart => true,
+        hasstatus => true,
         subscribe => [
+            File["riemann-upstart-job"],
             Exec["riemann-install"],
             File["riemann-upstart"],
             Service["carbon-cache"],
