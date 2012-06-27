@@ -14,9 +14,9 @@ Vagrant::Config.run do |config|
   config.vm.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/metrics", "1"]
 
   config.vm.provision :puppet do |puppet|
-    puppet.manifests_path = "puppet"
-    puppet.module_path = "puppet/modules"
+    puppet.manifests_path = "manifests"
+    puppet.module_path = "modules"
     puppet.manifest_file = "vagrant.pp"
-    puppet.options = "--verbose"
+    puppet.options = ["--verbose", "--node_name_value", "vagrant"]
   end
 end
