@@ -19,7 +19,8 @@ class graphite::params {
     /Ubuntu|debian/: {
       $user    = 'graphite'
       $group   = 'graphite'
-      $instdir = '/opt/graphite/'
+      $instdir = '/opt/graphite'
+      $webapp  = "$instdir/webapp"
       $wwwuser = 'www-data'
     }
     default: {

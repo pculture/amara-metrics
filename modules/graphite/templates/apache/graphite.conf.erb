@@ -6,7 +6,7 @@ WSGISocketPrefix /var/run/apache2/wsgi
 
   ServerName <%= servername %>
 
-  DocumentRoot "<%= instdir %>/webapp"
+  DocumentRoot "<%= webapp %>"
 
   CustomLog "|/usr/bin/cronolog <%= logdir %>/access.log" combined
   ErrorLog  "|/usr/bin/cronolog <%= logdir %>/error.log"
@@ -19,7 +19,7 @@ WSGISocketPrefix /var/run/apache2/wsgi
   #WSGIImportScript <%= instdir %>/conf/graphite.wsgi process-group=graphite application-group=%{GLOBAL}
 
   WSGIScriptAlias / <%= instdir %>/conf/graphite.wsgi
-  Alias /content/ <%= instdir %>/webapp/content/
+  Alias /content/ <%= webapp %>/content/
   <Location "/content/">
     SetHandler None
   </Location>
@@ -29,7 +29,7 @@ WSGISocketPrefix /var/run/apache2/wsgi
      SetHandler None
   </Location>
 
-  <Directory /opt/graphite/conf/>
+  <Directory <%= instdir %>/conf/>
     Order deny,allow
     Allow from all
   </Directory>

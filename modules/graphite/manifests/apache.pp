@@ -6,6 +6,7 @@
 # but this will do for testing
 define graphite::apache {
   $instdir    = $graphite::params::instdir
+  $webapp     = $graphite::params::webapp
   $servername = $title
   $logdir     = "/var/log/apache2/${servername}"
   

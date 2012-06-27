@@ -1,5 +1,5 @@
 import os, sys
-sys.path.append('/opt/graphite/webapp')
+sys.path.append('<%= scope.lookupvar('graphite::params::webapp') %>')
 os.environ['DJANGO_SETTINGS_MODULE'] = 'graphite.settings'
 
 import django.core.handlers.wsgi

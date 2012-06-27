@@ -17,6 +17,7 @@ class graphite::config {
   $user    = $graphite::params::user
   $group   = $graphite::params::group
   $instdir = $graphite::params::instdir
+  $webapp  = $graphite::params::webapp
   $wwwuser = $graphite::params::wwwuser
 
   file {"${instdir}/conf/aggregation-rules.conf":
@@ -76,10 +77,10 @@ class graphite::config {
 
   # Setup the database
   exec {'graphite-install-db':
-    environment => ["PYTHONPATH=${instdir}/webapp:${instdir}/whisper"],
+    environment => ["PYTHONPATH=${webapp}:${instdir}/whisper"],
     cwd         => $instdir,
     user        => $wwwuser,
-    command     => '/usr/bin/python ./webapp/graphite/manage.py syncdb --noinput',
+    command     => "/usr/bin/python $webapp/graphite/manage.py syncdb --noinput",
     require => [File["${instdir}/storage/graphite.db"]]
   }
 
