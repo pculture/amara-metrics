@@ -28,13 +28,13 @@ define graphite::apache {
     notify  => Service['apache2'],
     require => Package['libapache2-mod-wsgi']
   }
-  file {'/etc/apache2/sites-enabled/$servername':
+  file {"/etc/apache2/sites-enabled/$servername":
     ensure  => link,
-    target  => '/etc/apache2/sites-available/$servername',
+    target  => "/etc/apache2/sites-available/$servername",
     notify  => Service['apache2'],
     require => Package['apache2']
   }
-  file {'/etc/apache2/sites-available/$servername':
+  file {"/etc/apache2/sites-available/$servername":
     content => template('graphite/apache/graphite.conf.erb'),
     owner   => root,
     group   => root,
