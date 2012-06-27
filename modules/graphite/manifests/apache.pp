@@ -7,6 +7,8 @@
 define graphite::apache {
   $instdir    = $graphite::params::instdir
   $servername = $title
+  $logdir     = "/var/log/apache2/${servername}"
+  
   # Install
   package {['apache2',
             'libapache2-mod-wsgi']:
@@ -26,13 +28,13 @@ define graphite::apache {
     notify  => Service['apache2'],
     require => Package['libapache2-mod-wsgi']
   }
-  file {'/etc/apache2/sites-enabled/graphite.conf':
+  file {'/etc/apache2/sites-enabled/$servername':
     ensure  => link,
-    target  => '/etc/apache2/sites-available/graphite.conf',
+    target  => '/etc/apache2/sites-available/$servername',
     notify  => Service['apache2'],
     require => Package['apache2']
   }
-  file {'/etc/apache2/sites-available/graphite.conf':
+  file {'/etc/apache2/sites-available/$servername':
     content => template('graphite/apache/graphite.conf.erb'),
     owner   => root,
     group   => root,
@@ -40,7 +42,7 @@ define graphite::apache {
     notify  => Service['apache2'],
     require => Package['apache2']
   }
-  file {"${instdir}/storage/log/webapp":
+  file {$logdir:
     owner   => 'www-data',
     group   => 'www-data',
     require => [Package['apache2'],Class['graphite::install']],
@@ -58,7 +60,7 @@ define graphite::apache {
     ensure  => running,
     require => [
         Package['apache2'],
-        File["${instdir}/storage/log/webapp"],
+        File[$logdir],
         File["${instdir}/storage/index"],
     ],
   }

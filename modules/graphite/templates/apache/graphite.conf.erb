@@ -1,12 +1,15 @@
 
 WSGISocketPrefix /var/run/apache2/wsgi
+
 <VirtualHost *:80>
+  ServerAdmin sysadmin@pculture.org
 
   ServerName <%= servername %>
 
   DocumentRoot "<%= instdir %>/webapp"
-  ErrorLog <%= instdir %>/storage/log/webapp/error.log
-  CustomLog <%= instdir %>/storage/log/webapp/access.log common
+
+  CustomLog "|/usr/bin/cronolog <%= logdir %>/access.log" combined
+  ErrorLog  "|/usr/bin/cronolog <%= logdir %>/error.log"
 
   # I've found that an equal number of processes & threads tends
   # to show the best performance for Graphite (ymmv).
