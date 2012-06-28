@@ -26,7 +26,7 @@ class riemann {
         owner => root,
         group => root,
         source => ["file:///tmp/$debfile",
-                   "puppet:///modules/riemann/$debfile"],
+                   "puppet:///modules/riemann/riemann_${version}.deb"],
         alias => "riemann-deb",
     }
     
