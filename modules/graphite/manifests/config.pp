@@ -18,57 +18,58 @@ class graphite::config {
   $group   = $graphite::params::group
   $instdir = $graphite::params::instdir
   $webapp  = $graphite::params::webapp
+  $confdir = $graphite::params::confdir
   $wwwuser = $graphite::params::wwwuser
 
-  file {"${instdir}/conf/aggregation-rules.conf":
+  file {"${confdir}/aggregation-rules.conf":
     content => template('graphite/aggregation-rules.conf.erb'),
     owner   => root,
     group   => root,
     mode    => '0444',
   }
-  file {"${instdir}/conf/carbon.amqp.conf":
+  file {"${confdir}/carbon.amqp.conf":
     content => template('graphite/carbon.amqp.conf.erb'),
     owner   => root,
     group   => root,
     mode    => '0444',
   }
-  file {"${instdir}/conf/carbon.conf":
+  file {"${confdir}/carbon.conf":
     content => template('graphite/carbon.conf.erb'),
     owner   => root,
     group   => root,
     mode    => '0444',
   }
-  file {"${instdir}/conf/dashboard.conf":
+  file {"${confdir}/dashboard.conf":
     content => template('graphite/dashboard.conf.erb'),
     owner   => root,
     group   => root,
     mode    => '0444',
   }
-  file {"${instdir}/conf/graphite.wsgi":
+  file {"${confdir}/graphite.wsgi":
     content => template('graphite/graphite.wsgi.erb'),
     owner   => root,
     group   => root,
     mode    => '0444',
   }
-  file {"${instdir}/conf/graphTemplates.conf":
+  file {"${confdir}/graphTemplates.conf":
     content => template('graphite/graphTemplates.conf.erb'),
     owner   => root,
     group   => root,
     mode    => '0444',
   }
-  file {"${instdir}/conf/relay-rules.conf":
+  file {"${confdir}/relay-rules.conf":
     content => template('graphite/relay-rules.conf.erb'),
     owner   => root,
     group   => root,
     mode    => '0444',
   }
-  file {"${instdir}/conf/rewrite-rules.conf":
+  file {"${confdir}/rewrite-rules.conf":
     content => template('graphite/rewrite-rules.conf.erb'),
     owner   => root,
     group   => root,
     mode    => '0444',
   }
-  file {"${instdir}/conf/storage-schemas.conf":
+  file {"${confdir}/storage-schemas.conf":
     content => template('graphite/storage-schemas.conf.erb'),
     owner   => root,
     group   => root,

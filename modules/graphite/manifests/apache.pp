@@ -7,6 +7,7 @@
 define graphite::apache {
   $instdir    = $graphite::params::instdir
   $webapp     = $graphite::params::webapp
+  $confdir    = $graphite::params::confdir
   $servername = $title
   $logdir     = "/var/log/apache2/${servername}"
   

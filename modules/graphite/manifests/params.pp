@@ -21,6 +21,7 @@ class graphite::params {
       $group   = 'graphite'
       $instdir = '/opt/graphite'
       $webapp  = "$instdir/webapp"
+      $confdir = "$instdir/conf"
       $wwwuser = 'www-data'
     }
     default: {

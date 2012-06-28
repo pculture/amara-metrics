@@ -16,9 +16,9 @@ WSGISocketPrefix /var/run/apache2/wsgi
   WSGIDaemonProcess graphite processes=5 threads=5 display-name='%{GROUP}' inactivity-timeout=120
   WSGIProcessGroup graphite
   WSGIApplicationGroup %{GLOBAL}
-  #WSGIImportScript <%= instdir %>/conf/graphite.wsgi process-group=graphite application-group=%{GLOBAL}
+  #WSGIImportScript <%= confdir %>/graphite.wsgi process-group=graphite application-group=%{GLOBAL}
 
-  WSGIScriptAlias / <%= instdir %>/conf/graphite.wsgi
+  WSGIScriptAlias / <%= confdir %>/graphite.wsgi
   Alias /content/ <%= webapp %>/content/
   <Location "/content/">
     SetHandler None
@@ -29,7 +29,7 @@ WSGISocketPrefix /var/run/apache2/wsgi
      SetHandler None
   </Location>
 
-  <Directory <%= instdir %>/conf/>
+  <Directory <%= confdir %>/>
     Order deny,allow
     Allow from all
   </Directory>
