@@ -1,7 +1,6 @@
 
 #--------------------------------------------
 # Base
-# TODO: Move riemann from basenode to graphitenode
 node basenode {
   class { "base": }
 }
@@ -11,4 +10,5 @@ node basenode {
 
 node graphitenode inherits basenode {
   include graphite
+  class { "riemann": } <- Package['openjdk-6-jre']
 }
