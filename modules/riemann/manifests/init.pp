@@ -30,6 +30,14 @@ class riemann {
         alias => "riemann-deb",
     }
     
+    file { "/etc/riemann/riemann.config.clj":
+        mode   => 0644,
+        owner  => root,
+        group  => root,
+        source => "puppet:///modules/riemann/riemann.config.clj",
+        notify => Service['riemann'],
+    }
+
     exec { "riemann-install":
         cwd => "$instdir",
         command => "dpkg -i $debfile",

@@ -17,4 +17,4 @@ lein javac
 echo "Riemann is ready to go.  To start the server:"
 echo
 echo "cd ./riemann"
-echo "lein run ../riemann.config.clj"
+echo "lein run /etc/riemann/riemann.config.clj"
