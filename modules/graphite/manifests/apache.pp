@@ -8,6 +8,7 @@ define graphite::apache {
   $instdir    = $graphite::params::instdir
   $webapp     = $graphite::params::webapp
   $confdir    = $graphite::params::confdir
+  $storedir   = $graphite::params::storedir
   $servername = $title
   $logdir     = "/var/log/apache2/${servername}"
   
@@ -49,7 +50,7 @@ define graphite::apache {
     group   => 'www-data',
     require => [Package['apache2'],Class['graphite::install']],
   }
-  file {"${instdir}/storage/index":
+  file {"$storedir/index":
     ensure  => present,
     owner   => 'www-data',
     group   => 'www-data',
@@ -63,7 +64,7 @@ define graphite::apache {
     require => [
         Package['apache2'],
         File[$logdir],
-        File["${instdir}/storage/index"],
+        File["$storedir/index"],
     ],
   }
 

@@ -30,6 +30,7 @@
 # [Remember: No empty lines between comments and class definition]
 class graphite::install {
   $instdir = $graphite::params::instdir
+  $storedir= $graphite::params::storedir
   $user    = $graphite::params::user
   $wwwuser = $graphite::params::wwwuser
 
@@ -57,19 +58,19 @@ class graphite::install {
     ensure => directory,
     mode  => '0755',
   } ->
-  file {"${instdir}/storage":
+  file {"$storedir":
     ensure => directory,
     owner => $wwwuser,
     group => $wwwuser,
     mode  => '0755',
   } ->
-  file {"${instdir}/storage/graphite.db":
+  file {"$storedir/graphite.db":
     ensure => present,
     owner => $wwwuser,
     group => $wwwuser,
     mode  => '0755',
   } ->
-  file { "${instdir}/storage/whisper/":
+  file { "$storedir/whisper/":
     ensure => directory,
     owner   => $user,
     group   => $user,

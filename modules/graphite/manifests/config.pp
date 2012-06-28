@@ -19,6 +19,7 @@ class graphite::config {
   $instdir = $graphite::params::instdir
   $webapp  = $graphite::params::webapp
   $confdir = $graphite::params::confdir
+  $storedir= $graphite::params::storedir
   $wwwuser = $graphite::params::wwwuser
 
   file {"${confdir}/aggregation-rules.conf":
@@ -82,7 +83,7 @@ class graphite::config {
     cwd         => $instdir,
     user        => $wwwuser,
     command     => "/usr/bin/python $webapp/graphite/manage.py syncdb --noinput",
-    require => [File["${instdir}/storage/graphite.db"]]
+    require => [File["$storedir/graphite.db"]]
   }
 
 

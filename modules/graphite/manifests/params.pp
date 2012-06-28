@@ -22,6 +22,7 @@ class graphite::params {
       $instdir = '/opt/graphite'
       $webapp  = "$instdir/webapp"
       $confdir = "$instdir/conf"
+      $storedir= "$instdir/storage"
       $wwwuser = 'www-data'
     }
     default: {
