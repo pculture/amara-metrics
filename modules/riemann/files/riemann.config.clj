@@ -1,3 +1,5 @@
+(logging/init :file "/var/log/riemann.log")
+
 (tcp-server)
 (udp-server)
 
