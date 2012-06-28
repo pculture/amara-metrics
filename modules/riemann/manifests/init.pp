@@ -3,7 +3,7 @@ define download_ignore_if_missing ($uri, $timeout = 300, $returns = 0) {
     exec {
         "download ignore if missing $uri":
             require => Package[ "wget" ],
-            onlyif  => "wget -q '$uri' -O $name",
+            onlyif  => "wget -q '$uri' -O $name || rm -f $name",
             command => "/bin/true",
             timeout => $timeout,
             returns => $returns,
@@ -26,7 +26,7 @@ class riemann {
         owner => root,
         group => root,
         source => ["file:///tmp/$debfile",
-                   "puppet:///modules/riemann/riemann_${version}.deb"],
+                   "puppet:///modules/riemann/$debfile"],
         alias => "riemann-deb",
     }
     
