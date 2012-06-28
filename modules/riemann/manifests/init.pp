@@ -1,16 +1,38 @@
+
+define download_ignore_if_missing ($uri, $timeout = 300, $returns = 0) {
+    exec {
+        "download ignore if missing $uri":
+            require => Package[ "wget" ],
+            onlyif  => "wget -q '$uri' -O $name",
+            command => "/bin/true",
+            timeout => $timeout,
+            returns => $returns,
+            creates => $name,
+    }
+}
+
 class riemann {
     $version = "0.1.1-SNAPSHOT"
+    $instdir = '/opt'
+    $debfile = "riemann-${version}.deb"
 
-    file { "/opt/riemann.deb":
+    download_ignore_if_missing { "/tmp/$debfile":
+        uri => "http://aphyr.com/riemann/riemann_${version}.deb",
+        before => File["$instdir/$debfile"],
+    } 
+
+    file { "$instdir/$debfile":
         mode => 0644,
         owner => root,
         group => root,
-        source => "puppet:///modules/riemann/riemann_${version}.deb",
+        source => ["file:///tmp/$debfile",
+                   "puppet:///modules/riemann/riemann_${version}.deb"],
         alias => "riemann-deb",
     }
+    
     exec { "riemann-install":
-        cwd => "/opt",
-        command => "dpkg -i riemann.deb",
+        cwd => "$instdir",
+        command => "dpkg -i $debfile",
         refreshonly => true,
         subscribe => File["riemann-deb"],
     } ->
@@ -38,5 +60,8 @@ class riemann {
             File["riemann-upstart"],
             Service["carbon-cache"],
         ],
+    } ->
+    exec { "cleanup" :
+        command => "rm -f /tmp/$debfile",
     }
 }

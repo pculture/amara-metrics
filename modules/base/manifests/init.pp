@@ -7,4 +7,5 @@ class base {
   package { "curl": ensure => "present", }
   package { "git-core": ensure => "installed", }
   package { "vim": ensure => "installed", }
+  package { "wget": ensure => "installed", }
 }
