@@ -23,7 +23,7 @@
 # Requires:
 #
 # Sample Usage:
-# 
+#
 # This class should not be called directly; use the main class.
 #
 # (c) Copyright John Cooper - Licenced Under GPL Version 3
@@ -77,13 +77,27 @@ class graphite::install {
     mode    => '0755',
     require => Pipinstall['whisper'],
   }
+  file { "$storedir/log/":
+    ensure => directory,
+    owner   => $wwwuser,
+    group   => $user,
+    mode    => '0775',
+    recurse => true,
+    require => Pipinstall['whisper'],
+  }
 
-  # Install carbon-cache init service
+  # Install carbon-cache upstart
+  # manual symlink to /lib/init/upstart-job for http://projects.puppetlabs.com/issues/14297
   file { '/etc/init.d/carbon-cache':
+      ensure  => link,
+      target  => '/lib/init/upstart-job',
+      alias   => "carbon-cache-upstart-job"
+  }
+  file { '/etc/init/carbon-cache.conf':
     content => template('graphite/carbon-cache.init.erb'),
     owner   => root,
     group   => root,
     mode    => '0744',
-    require => Pipinstall['carbon'],
+    require => [ Pipinstall['carbon'], File["carbon-cache-upstart-job"] ],
   }
 }

@@ -11,10 +11,11 @@ define graphite::apache {
   $storedir   = $graphite::params::storedir
   $servername = $title
   $logdir     = "/var/log/apache2/${servername}"
-  
+
   # Install
   package {['apache2',
-            'libapache2-mod-wsgi']:
+            'libapache2-mod-wsgi',
+            'cronolog']:
     ensure => installed,
   }
 
@@ -46,9 +47,11 @@ define graphite::apache {
     require => Package['apache2']
   }
   file {$logdir:
+    ensure  => directory,
     owner   => 'www-data',
     group   => 'www-data',
     require => [Package['apache2'],Class['graphite::install']],
+    notify  => Service['apache2'],
   }
   file {"$storedir/index":
     ensure  => present,
