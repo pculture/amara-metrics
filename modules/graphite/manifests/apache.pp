@@ -42,7 +42,7 @@ define graphite::apache {
     content => template('graphite/apache/graphite.conf.erb'),
     owner   => root,
     group   => root,
-    mode    => '0444',
+    mode    => '0644',
     notify  => Service['apache2'],
     require => Package['apache2']
   }
