@@ -13,7 +13,7 @@ WSGISocketPrefix /var/run/apache2/wsgi
 
   # I've found that an equal number of processes & threads tends
   # to show the best performance for Graphite (ymmv).
-  WSGIDaemonProcess graphite processes=5 threads=5 display-name='%{GROUP}' inactivity-timeout=120
+  WSGIDaemonProcess graphite processes=5 threads=5 display-name=apache2-wsgi inactivity-timeout=120
   WSGIProcessGroup graphite
   WSGIApplicationGroup %{GLOBAL}
   #WSGIImportScript <%= confdir %>/graphite.wsgi process-group=graphite application-group=%{GLOBAL}
