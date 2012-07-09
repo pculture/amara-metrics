@@ -23,41 +23,53 @@ class graphite::config {
   $storedir= $graphite::params::storedir
   $wwwuser = $graphite::params::wwwuser
 
+  file {"$confdir":
+    ensure  => directory,
+    owner   => root,
+    group   => root,
+    mode    => '0755',
+  }
+  
   file {"${confdir}/aggregation-rules.conf":
     content => template('graphite/aggregation-rules.conf.erb'),
     owner   => root,
     group   => root,
-    mode    => '0444',
+    mode    => '0644',
+    require => File[$confdir],
   }
   file {"${confdir}/carbon.amqp.conf":
     content => template('graphite/carbon.amqp.conf.erb'),
     owner   => root,
     group   => root,
-    mode    => '0444',
+    mode    => '0644',
+    require => File[$confdir],
   }
   file {"${confdir}/carbon.conf":
     content => template('graphite/carbon.conf.erb'),
     owner   => root,
     group   => root,
-    mode    => '0444',
+    mode    => '0644',
+    require => File[$confdir],
   }
   file {"${confdir}/dashboard.conf":
     content => template('graphite/dashboard.conf.erb'),
     owner   => root,
     group   => root,
-    mode    => '0444',
+    mode    => '0644',
+    require => File[$confdir],
   }
   file {"${confdir}/graphite.wsgi":
     content => template('graphite/graphite.wsgi.erb'),
     owner   => root,
     group   => root,
-    mode    => '0444',
+    mode    => '0644',
   }
   file {"${confdir}/graphTemplates.conf":
     content => template('graphite/graphTemplates.conf.erb'),
     owner   => root,
     group   => root,
-    mode    => '0444',
+    mode    => '0644',
+    require => File[$confdir],
   }
   file {"${webapp}/graphite/local_settings.py":
     content => template('graphite/local_settings.py.erb'),
@@ -69,19 +81,22 @@ class graphite::config {
     content => template('graphite/relay-rules.conf.erb'),
     owner   => root,
     group   => root,
-    mode    => '0444',
+    mode    => '0644',
+    require => File[$confdir],
   }
   file {"${confdir}/rewrite-rules.conf":
     content => template('graphite/rewrite-rules.conf.erb'),
     owner   => root,
     group   => root,
-    mode    => '0444',
+    mode    => '0644',
+    require => File[$confdir],
   }
   file {"${confdir}/storage-schemas.conf":
     content => template('graphite/storage-schemas.conf.erb'),
     owner   => root,
     group   => root,
-    mode    => '0444',
+    mode    => '0644',
+    require => File[$confdir],
   }
 
   # Setup the database

@@ -22,7 +22,7 @@ class graphite::params {
       $logdir  = '/var/log/graphite'
       $instdir = '/opt/graphite'
       $webapp  = "$instdir/webapp"
-      $confdir = "$instdir/conf"
+      $confdir = "/etc/graphite"
       $storedir= "$instdir/storage"
       $wwwuser = 'www-data'
     }
