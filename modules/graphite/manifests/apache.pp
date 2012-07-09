@@ -6,11 +6,12 @@
 # but this will do for testing
 define graphite::apache {
   $instdir    = $graphite::params::instdir
+  $logdir     = $graphite::params::logdir
   $webapp     = $graphite::params::webapp
   $confdir    = $graphite::params::confdir
   $storedir   = $graphite::params::storedir
   $servername = $title
-  $logdir     = "/var/log/apache2/${servername}"
+  $logdir_apache = "/var/log/apache2/${servername}"
 
   # Install
   package {['apache2',
@@ -46,12 +47,22 @@ define graphite::apache {
     notify  => Service['apache2'],
     require => Package['apache2']
   }
-  file {$logdir:
+  file {$logdir_apache:
     ensure  => directory,
     owner   => 'www-data',
     group   => 'www-data',
     require => [Package['apache2'],Class['graphite::install']],
     notify  => Service['apache2'],
+  }
+  file {"$logdir/access.log":
+    ensure  => link,
+    target  => "$logdir_apache/access.log",
+    require => File[$logdir_apache]
+  }
+  file {"$logdir/error.log":
+    ensure  => link,
+    target  => "$logdir_apache/error.log",
+    require => File[$logdir_apache]
   }
   file {"$storedir/index":
     ensure  => present,
@@ -66,7 +77,7 @@ define graphite::apache {
     ensure  => running,
     require => [
         Package['apache2'],
-        File[$logdir],
+        File[$logdir_apache],
         File["$storedir/index"],
     ],
   }

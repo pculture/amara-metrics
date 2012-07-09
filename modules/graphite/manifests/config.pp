@@ -17,6 +17,7 @@ class graphite::config {
   $user    = $graphite::params::user
   $group   = $graphite::params::group
   $instdir = $graphite::params::instdir
+  $logdir  = $graphite::params::logdir
   $webapp  = $graphite::params::webapp
   $confdir = $graphite::params::confdir
   $storedir= $graphite::params::storedir
@@ -57,6 +58,12 @@ class graphite::config {
     owner   => root,
     group   => root,
     mode    => '0444',
+  }
+  file {"${webapp}/graphite/local_settings.py":
+    content => template('graphite/local_settings.py.erb'),
+    owner   => root,
+    group   => root,
+    mode    => '0644',
   }
   file {"${confdir}/relay-rules.conf":
     content => template('graphite/relay-rules.conf.erb'),

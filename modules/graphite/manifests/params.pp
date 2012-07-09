@@ -19,6 +19,7 @@ class graphite::params {
     /Ubuntu|debian/: {
       $user    = 'graphite'
       $group   = 'graphite'
+      $logdir  = '/var/log/graphite'
       $instdir = '/opt/graphite'
       $webapp  = "$instdir/webapp"
       $confdir = "$instdir/conf"

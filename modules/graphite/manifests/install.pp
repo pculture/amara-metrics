@@ -30,6 +30,7 @@
 # [Remember: No empty lines between comments and class definition]
 class graphite::install {
   $instdir = $graphite::params::instdir
+  $logdir  = $graphite::params::logdir
   $storedir= $graphite::params::storedir
   $user    = $graphite::params::user
   $wwwuser = $graphite::params::wwwuser
@@ -77,7 +78,7 @@ class graphite::install {
     mode    => '0755',
     require => Pipinstall['whisper'],
   }
-  file { "$storedir/log/":
+  file { $logdir:
     ensure => directory,
     owner   => $wwwuser,
     group   => $user,
