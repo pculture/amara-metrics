@@ -71,11 +71,17 @@ class graphite::config {
     mode    => '0644',
     require => File[$confdir],
   }
-  file {"${webapp}/graphite/local_settings.py":
+  file {"${confdir}/local_settings.py":
     content => template('graphite/local_settings.py.erb'),
     owner   => root,
     group   => root,
     mode    => '0644',
+    require => File[$confdir],
+    notify  => Service['apache2'],
+  }
+  file {"${webapp}/graphite/local_settings.py":
+    ensure  => link,
+    target  => "${confdir}/local_settings.py",
   }
   file {"${confdir}/relay-rules.conf":
     content => template('graphite/relay-rules.conf.erb'),
