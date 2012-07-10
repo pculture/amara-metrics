@@ -16,9 +16,9 @@ WSGISocketPrefix /var/run/apache2/wsgi
   WSGIDaemonProcess graphite processes=5 threads=5 display-name=apache2-wsgi inactivity-timeout=120
   WSGIProcessGroup graphite
   WSGIApplicationGroup %{GLOBAL}
-  #WSGIImportScript <%= confdir %>/graphite.wsgi process-group=graphite application-group=%{GLOBAL}
+  #WSGIImportScript <%= webapp %>/graphite.wsgi process-group=graphite application-group=%{GLOBAL}
 
-  WSGIScriptAlias / <%= confdir %>/graphite.wsgi
+  WSGIScriptAlias / <%= webapp %>/graphite.wsgi
   Alias /content/ <%= webapp %>/content/
   <Location "/content/">
     SetHandler None

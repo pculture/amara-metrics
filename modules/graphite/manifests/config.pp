@@ -58,7 +58,7 @@ class graphite::config {
     mode    => '0644',
     require => File[$confdir],
   }
-  file {"${confdir}/graphite.wsgi":
+  file {"${webapp}/graphite.wsgi":
     content => template('graphite/graphite.wsgi.erb'),
     owner   => root,
     group   => root,
