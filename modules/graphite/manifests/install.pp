@@ -29,6 +29,7 @@
 # (c) Copyright John Cooper - Licenced Under GPL Version 3
 # [Remember: No empty lines between comments and class definition]
 class graphite::install {
+  $confdir = $graphite::params::confdir
   $instdir = $graphite::params::instdir
   $logdir  = $graphite::params::logdir
   $storedir= $graphite::params::storedir
